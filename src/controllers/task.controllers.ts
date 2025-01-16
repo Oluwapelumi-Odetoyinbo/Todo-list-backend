@@ -9,7 +9,7 @@ export const createTask: RequestHandler = async (req, res) => {
   
       if (!name) {
         res.status(400).json({ message: 'name is required' });
-        return; // Explicitly stop execution
+        return;  
       }
   
       const task = await Task.create({ name });
