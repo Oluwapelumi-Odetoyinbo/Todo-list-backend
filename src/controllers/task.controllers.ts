@@ -18,6 +18,8 @@ export const createTask: RequestHandler = async (req, res) => {
   }
 };
 
+
+//task to delete
 export const deleteTask: RequestHandler = async (req, res) => {
   try {
     const { id } = req.params;
