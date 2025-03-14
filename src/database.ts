@@ -3,8 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config(); // Load environment variables
 
-const MONGO_URI: string | undefined = process.env.MONGO_URI;
-
+const MONGO_URI: string = process.env.MONGO_URI || "mongodb+srv://todo_user:Test123#@taskdb.j9hjn.mongodb.net/";
 if (!MONGO_URI) {
   console.error("❌ MongoDB connection string (MONGO_URI) is missing!");
   process.exit(1);
