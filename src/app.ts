@@ -1,19 +1,17 @@
-import express, { Application } from "express"; 
+import express, { Application, Request, Response } from "express"; 
 import cors from "cors";
-import taskRoutes from './routes/task.routes'
+import taskRoutes from './routes/task.routes';
 
 const app: Application = express();
 
-//enables cors for all origins (but here am restricting for only this server)
+// Enables CORS (consider restricting to specific origins if needed)
 app.use(cors());
 app.use(express.json()); 
 
-app.use('/tasks', taskRoutes)
+app.use('/tasks', taskRoutes);
 
+app.get("/", (_req: Request, res: Response) => {
+    res.send("Tasks API!");
+});
 
-app.get("/", (_req, res) => {
-    res.send(" Tasks Api!");
-  });
-  
-  
-  export default app;
+export default app;
