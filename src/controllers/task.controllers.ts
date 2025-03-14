@@ -7,11 +7,11 @@ export const createTask: RequestHandler = async (req, res) => {
 
     if (!name) {
       res.status(400).json({ message: 'name is required' });
-      return;  
+      return;
     }
 
     const task = await Task.create({ name });
-    res.status(201).json(task);
+    res.status(201).json(task); // Send the newly created task in the response
   } catch (error: any) {
     console.error('Error creating task:', error.message || error);
     res.status(500).json({ message: 'Error creating task', error: error.message });
