@@ -1,54 +1,55 @@
-import { RequestHandler } from 'express';
-import Task from '../models/task.model';
+import { Request, Response } from "express";
+import Task from "../models/task.model";
 
-export const createTask: RequestHandler = async (req, res) => {
+// Create Task
+export const createTask = async (req: Request, res: Response):Promise <any> => {
   try {
     const { name } = req.body;
 
     if (!name) {
-      res.status(400).json({ message: 'name is required' });
-      return;
+      return res.status(400).json({ message: "Task name is required" });
     }
 
     const task = await Task.create({ name });
-    res.status(201).json(task); // Send the newly created task in the response
-  } catch (error: any) {
-    console.error('Error creating task:', error.message || error);
-    res.status(500).json({ message: 'Error creating task', error: error.message });
+    return res.status(201).json({ message: "Task created successfully", task });
+  } catch (error: unknown) {
+    console.error("Error creating task:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return res.status(500).json({ message: "Error creating task", error: errorMessage });
   }
 };
 
-
-//task to delete
-export const deleteTask: RequestHandler = async (req, res) => {
+// Delete Task
+export const deleteTask = async (req: Request, res: Response): Promise<any> => {
   try {
     const { id } = req.params;
- 
+
     if (!id) {
-      res.status(400).json({ message: 'Task ID is required' });
-      return;
+      return res.status(400).json({ message: "Task ID is required" });
     }
 
     const deletedTask = await Task.findByIdAndDelete(id);
 
     if (!deletedTask) {
-      res.status(404).json({ message: 'Task not found' });
-      return;  
+      return res.status(404).json({ message: "Task not found" });
     }
 
-    res.status(200).json({ message: 'Task deleted successfully', task: deletedTask });
-  } catch (error: any) {
-    console.error('Error deleting task:', error.message || error);
-    res.status(500).json({ message: 'Error deleting task', error: error.message });
+    return res.status(200).json({ message: "Task deleted successfully", task: deletedTask });
+  } catch (error: unknown) {
+    console.error("Error deleting task:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return res.status(500).json({ message: "Error deleting task", error: errorMessage });
   }
 };
 
-
-export const getTasks: RequestHandler = async (_req, res) => {
+// Get All Tasks
+export const getTasks = async (_req: Request, res: Response): Promise <any> => {
   try {
     const tasks = await Task.find();
-    res.json(tasks); // Send tasks as the response
-  } catch (error) {
-    res.status(500).json({ message: 'Error fetching tasks' }); // Handle error properly
+    return res.status(200).json({ tasks });
+  } catch (error: unknown) {
+    console.error("Error fetching tasks:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    return res.status(500).json({ message: "Error fetching tasks", error: errorMessage });
   }
 };

@@ -1,7 +1,7 @@
-import express from 'express'
-import { getTasks, createTask, deleteTask} from '../controllers/task.controllers'
+import express, { Router } from 'express';
+import { getTasks, createTask, deleteTask } from '../controllers/task.controllers';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 router.get('/', getTasks);
 router.post('/', createTask);
